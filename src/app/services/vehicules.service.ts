@@ -1,12 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiMAService {
 
-  private baseUrl: string = 'https://servicios.qamercantilandina.com.ar/api/v1'
+export class vehiculesService {
+
+  private baseUrl: string = `${ environment.baseUrl }/api/v1`
 
   constructor( private http: HttpClient ) { }
 
