@@ -1,0 +1,129 @@
+<form autocomplete="off" [formGroup]="form">
+    <div>
+
+        <!-- Campo Dni -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">DNI</label>
+            <div class="col">
+
+                <input class="form-control" type="text" formControlName="dni" [class.is-invalid]="invalidDni">
+                <small *ngIf="invalidDni" class="text-danger">
+                    Dni invalido
+                </small>
+            </div>
+        </div>
+
+        <!-- Campo Apellido -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Apellido</label>
+            <div class="col">
+
+                <input class="form-control" type="text" formControlName="apellido" [class.is-invalid]="invalidDni">
+                <small *ngIf="invalidDni" class="text-danger">
+                    Dni invalido
+                </small>
+            </div>
+        </div>
+
+        <!-- Campo Nombre -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Nombre</label>
+            <div class="col">
+
+                <input class="form-control" type="text" formControlName="nombre" [class.is-invalid]="invalidNombre">
+                <small *ngIf="invalidNombre" class="text-danger">
+                    Ingrese 5 letras
+                </small>
+            </div>
+        </div>
+
+        <!-- Campo Email -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Email</label>
+            <div class="col">
+
+                <input class="form-control" type="text" formControlName="email" [class.is-invalid]="invalidEmail">
+                <small *ngIf="invalidEmail" class="text-danger">
+                    Ingrese 5 letras
+                </small>
+            </div>
+        </div>
+
+        <!-- Campo Celular -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Celular</label>
+            <div class="col">
+
+                <input class="form-control" type="text" formControlName="celular" [class.is-invalid]="invalidCelular">
+                <small *ngIf="invalidCelular" class="text-danger">
+                    Ingrese 5 letras
+                </small>
+            </div>
+        </div>
+
+        <!-- Campo Telefono -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Teléfono</label>
+            <div class="col">
+
+                <input class="form-control" type="text" formControlName="telefono" [class.is-invalid]="invalidTelefono">
+                <small *ngIf="invalidTelefono" class="text-danger">
+                    Ingrese 5 letras
+                </small>
+            </div>
+        </div>
+
+        <!-- Campo Ubicacion -->
+        <div class="form-group row" formGroupName="ubicacion">
+            <label class="col-2 col-form-label">ubicacion</label>
+            <div class="form-row col">
+                <div class="col">
+                    <input class="form-control" type="text" placeholder="provincia" formControlName="provincia">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="text" placeholder="ciudad" formControlName="ciudad">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="text" placeholder="domicilio" formControlName="domicilio">
+                </div>
+            </div>
+        </div>
+
+        <!-- Campo Fecha de nacimiento -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Fecha de nacimiento</label>
+            <div class="col">
+
+                <input class="form-control" type="text" formControlName="fechaNacimiento" [class.is-invalid]="invalidFechaNacimiento">
+                <small *ngIf="invalidFechaNacimiento" class="text-danger">
+                    Ingrese 5 letras
+                </small>
+            </div>
+        </div>
+
+        <!-- Campo Usuario -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Usuario</label>
+            <div class="col">
+
+                <input class="form-control" type="text" formControlName="usuario" [class.is-invalid]="invalidUsuario">
+                <small *ngIf="invalidUsuario" class="text-danger">
+                    Ingrese 5 letras
+                </small>
+            </div>
+        </div>
+
+        <!-- Campo Usuario -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Contraseña</label>
+            <div class="col">
+
+                <input class="form-control" type="text" formControlName="password" [class.is-invalid]="invalidPassword">
+                <small *ngIf="invalidPassword" class="text-danger">
+                    Ingrese 5 letras
+                </small>
+            </div>
+        </div>
+
+    </div>
+</form>
