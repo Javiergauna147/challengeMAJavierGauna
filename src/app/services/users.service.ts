@@ -15,7 +15,7 @@ import { Observable } from "rxjs";
 
 export class UsersService {
 
-  private baseUrl: string = `${ environment.baseUrl }/api_mock_frontend/v1'`;
+  private baseUrl: string = `${ environment.baseUrl }/api_mock_frontend/v1`;
 
   constructor( private http: HttpClient ) { }
 

@@ -94,7 +94,7 @@
             <label class="col-2 col-form-label">Fecha de nacimiento</label>
             <div class="col">
 
-                <input class="form-control" type="text" formControlName="fechaNacimiento" [class.is-invalid]="invalidFechaNacimiento">
+                <input class="form-control" type="date" [max]="maxDate" [min]="minDate" formControlName="fechaNacimiento" [class.is-invalid]="invalidFechaNacimiento">
                 <small *ngIf="invalidFechaNacimiento" class="text-danger">
                     Ingrese 5 letras
                 </small>
