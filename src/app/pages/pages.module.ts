@@ -4,8 +4,6 @@ import { ComponentsModule } from "../components/components.module";
 
 import { AltaAseguradoComponent } from './alta-asegurado/alta-asegurado.component';
 
-
-
 @NgModule({
   declarations: [AltaAseguradoComponent],
   imports: [

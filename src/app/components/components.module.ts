@@ -11,13 +11,13 @@ import { PersonalDataFormComponent } from './forms/personal-data-form/personal-d
 
 @NgModule({
   declarations: [NavbarComponent, PersonalDataFormComponent],
-  exports: [
-    NavbarComponent,
-    PersonalDataFormComponent
-  ],
   imports: [
     CommonModule,
     ReactiveFormsModule
+  ],
+  exports: [
+    NavbarComponent,
+    PersonalDataFormComponent
   ]
 })
 export class ComponentsModule { }

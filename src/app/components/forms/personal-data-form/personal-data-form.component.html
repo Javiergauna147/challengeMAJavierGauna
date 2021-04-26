@@ -18,8 +18,8 @@
             <label class="col-2 col-form-label">Apellido</label>
             <div class="col">
 
-                <input class="form-control" type="text" formControlName="apellido" [class.is-invalid]="invalidDni">
-                <small *ngIf="invalidDni" class="text-danger">
+                <input class="form-control" type="text" formControlName="apellido" [class.is-invalid]="invalidApellido">
+                <small *ngIf="invalidApellido" class="text-danger">
                     Dni invalido
                 </small>
             </div>
@@ -108,12 +108,12 @@
 
                 <input class="form-control" type="text" formControlName="usuario" [class.is-invalid]="invalidUsuario">
                 <small *ngIf="invalidUsuario" class="text-danger">
-                    Ingrese 5 letras
+                    Usario invalido
                 </small>
             </div>
         </div>
 
-        <!-- Campo Usuario -->
+        <!-- Campo Contraseña -->
         <div class="form-group row">
             <label class="col-2 col-form-label">Contraseña</label>
             <div class="col">
