@@ -10,7 +10,7 @@ import { UsersService } from '../../../services/users.service';
 @Injectable({
     providedIn: 'root'
 })
-export class UsernameUniqueService {
+export class UsernameUniqueValidation {
 
     constructor( private usersService: UsersService ) { }
     
@@ -21,6 +21,7 @@ export class UsernameUniqueService {
      */
     userExits(): AsyncValidatorFn {
         return( control: AbstractControl ): Observable<ValidationErrors> => {
+            console.log(control)
             return this.usersService.checkIfUserExists(control.value).pipe(map(res => {
                 return res ? { usernameExits: true } : null;
             }));

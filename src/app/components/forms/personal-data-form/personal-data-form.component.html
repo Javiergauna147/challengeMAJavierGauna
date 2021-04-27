@@ -1,4 +1,4 @@
-<form autocomplete="off" [formGroup]="form">
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="saveForm()">
     <div>
 
         <!-- Campo Dni -->
@@ -20,7 +20,7 @@
 
                 <input class="form-control" type="text" formControlName="apellido" [class.is-invalid]="invalidApellido">
                 <small *ngIf="invalidApellido" class="text-danger">
-                    Dni invalido
+                    El apellido debe tener entre 2 y 15 caracteres.
                 </small>
             </div>
         </div>
@@ -32,7 +32,7 @@
 
                 <input class="form-control" type="text" formControlName="nombre" [class.is-invalid]="invalidNombre">
                 <small *ngIf="invalidNombre" class="text-danger">
-                    Ingrese 5 letras
+                    El nombre debe tener entre 2 y 15 caracteres.
                 </small>
             </div>
         </div>
@@ -44,7 +44,7 @@
 
                 <input class="form-control" type="text" formControlName="email" [class.is-invalid]="invalidEmail">
                 <small *ngIf="invalidEmail" class="text-danger">
-                    Ingrese 5 letras
+                    Email invalido.
                 </small>
             </div>
         </div>
@@ -56,7 +56,7 @@
 
                 <input class="form-control" type="text" formControlName="celular" [class.is-invalid]="invalidCelular">
                 <small *ngIf="invalidCelular" class="text-danger">
-                    Ingrese 5 letras
+                    Número de celular invalido.
                 </small>
             </div>
         </div>
@@ -65,10 +65,9 @@
         <div class="form-group row">
             <label class="col-2 col-form-label">Teléfono</label>
             <div class="col">
-
                 <input class="form-control" type="text" formControlName="telefono" [class.is-invalid]="invalidTelefono">
                 <small *ngIf="invalidTelefono" class="text-danger">
-                    Ingrese 5 letras
+                    Número de teléfono invalido
                 </small>
             </div>
         </div>
@@ -78,10 +77,16 @@
             <label class="col-2 col-form-label">ubicacion</label>
             <div class="form-row col">
                 <div class="col">
-                    <input class="form-control" type="text" placeholder="provincia" formControlName="provincia">
+                    <select class="form-control" formControlName="provincia" (change)="cargarCiudades($event.target.value)">
+                        <option value="" disabled selected hidden>Selecione una provincia</option>
+                        <option [value]="provincia.nombre" *ngFor="let provincia of provincias">{{provincia.nombre}}</option>
+                    </select>
                 </div>
                 <div class="col">
-                    <input class="form-control" type="text" placeholder="ciudad" formControlName="ciudad">
+                    <select class="form-control" formControlName="ciudad">
+                        <option value="" disabled selected hidden>Selecione una ciudad</option>
+                        <option [value]="ciudad.nombre" *ngFor="let ciudad of ciudades">{{ ciudad.nombre }}</option>
+                    </select>
                 </div>
                 <div class="col">
                     <input class="form-control" type="text" placeholder="domicilio" formControlName="domicilio">
@@ -95,8 +100,8 @@
             <div class="col">
 
                 <input class="form-control" type="date" [max]="maxDate" [min]="minDate" formControlName="fechaNacimiento" [class.is-invalid]="invalidFechaNacimiento">
-                <small *ngIf="invalidFechaNacimiento" class="text-danger">
-                    Ingrese 5 letras
+                <small>
+                    Solo se admiten fechas para mayores de 18 años
                 </small>
             </div>
         </div>
@@ -108,7 +113,7 @@
 
                 <input class="form-control" type="text" formControlName="usuario" [class.is-invalid]="invalidUsuario">
                 <small *ngIf="invalidUsuario" class="text-danger">
-                    Usario invalido
+                    El usuario es invalido (debe tener entre 3 y 30 caracteres) o ya existe.
                 </small>
             </div>
         </div>
@@ -118,11 +123,27 @@
             <label class="col-2 col-form-label">Contraseña</label>
             <div class="col">
 
-                <input class="form-control" type="text" formControlName="password" [class.is-invalid]="invalidPassword">
-                <small *ngIf="invalidPassword" class="text-danger">
-                    Ingrese 5 letras
+                <input class="form-control" type="password" formControlName="password1" [class.is-invalid]="invalidPassword1">
+                <small *ngIf="invalidPassword1" class="text-danger">
+                    La contraseña debe tener al menos 8 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. Puede tener otros símbolos.
                 </small>
             </div>
+        </div>
+
+        <!-- Campo Repita Contraseña -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Repita la contraseña</label>
+            <div class="col">
+                <input class="form-control" type="password" formControlName="password2" [class.is-invalid]="invalidPassword2">
+                <small *ngIf="invalidPassword2" class="text-danger">
+                    Las contraseñas no son iguales.
+                </small>
+            </div>
+        </div>
+
+        <!-- Boton para guardar y seguir -->
+        <div class="input-group col">
+            <button type="submit" class="btn btn-outline-primary btn-block">Siguiente</button>
         </div>
 
     </div>

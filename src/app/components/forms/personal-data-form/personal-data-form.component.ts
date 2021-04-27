@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+/** Servicios **/
+import { GeographicService } from '../../../services/geographic.service';
 /** helpers **/
 import { DateHelpers } from '../helpers/date-helpers';
-
 /** Validaciones de formulario**/
-import { UsernameUniqueService } from '../validations/username-unique';
+import { UsernameUniqueValidation } from '../validations/username-unique';
+import { SamePasswordValidation } from '../validations/same-password';
 
 
 @Component({
@@ -19,14 +21,25 @@ export class PersonalDataFormComponent {
   curDate = new Date();
   maxDate: string = this.dateHelpers.formatDate(this.dateHelpers.substractYearsFromADate(this.curDate, 18)); // variable para setear el atributo 'max' del input fechaNacimiento
   minDate: string = this.dateHelpers.formatDate(this.dateHelpers.substractYearsFromADate(this.curDate, 99)); // variable para setear el atributo 'min' del input fechaNacimiento
+
+  provincias = [];
+  ciudades = [];
   
   form: FormGroup;
   
   constructor( private formBuilder: FormBuilder,
                private dateHelpers: DateHelpers,
-               private userUniqueValidation: UsernameUniqueService ) {
+               private userUniqueValidation: UsernameUniqueValidation,
+               private samePsswordValidation: SamePasswordValidation,
+               private geoService: GeographicService ) {
 
       this.createForm();
+      this.cargarProvincias();
+
+      this.form.controls.ubicacion.get('provincia').disable();
+      this.form.controls.ubicacion.get('ciudad').disable();
+      this.form.controls.ubicacion.get('domicilio').disable();
+      
     }
 
   get invalidDni(){
@@ -65,10 +78,59 @@ export class PersonalDataFormComponent {
     return this.form.get('usuario').invalid && this.form.get('usuario').touched;
   }
 
-  get invalidPassword(){
-    return this.form.get('password').invalid && this.form.get('password').touched;
+  get invalidPassword1(){
+    return this.form.get('password1').invalid && this.form.get('password1').touched;
+  }
+
+  get invalidPassword2() {
+
+    const pass1 = this.form.get('password1').value;
+    const pass2 = this.form.get('password2').value;
+
+    return (pass1 === pass2) ? false : true;
   }
   
+  
+  cargarProvincias(){
+    this.geoService.getProvincias().subscribe(data => {
+      if(data.provincias.length > 0){
+        this.provincias = data.provincias;
+        this.form.controls.ubicacion.get('provincia').enable();
+      }else{
+        // En caso de no poder recibir los datos geográficos de la api emitimos la siguiente alerta
+        alert('Lo sentimos, estamos teniendo inconvenientes por favor intentelo más tarde');
+      }
+    })
+  }
+
+  cargarCiudades(provinciaNombre){
+
+    const provincia = this.provincias.find(provincia => provincia.nombre === provinciaNombre);
+
+    this.ciudades = [];
+
+    this.geoService.getMunicipios(provincia.id).subscribe(data => {
+      if(data.municipios.length > 0){
+        this.ciudades = data.municipios;
+        this.form.controls.ubicacion.get('ciudad').enable();
+        this.form.controls.ubicacion.get('domicilio').enable();
+      }
+    })
+  }
+  saveForm() {
+
+    console.log(this.form.value);
+
+    // Si algún campo quedó vacio, se marcan los errores antes de permitir enviar el formulario
+    if ( this.form.invalid ){
+      return Object.values(this.form.controls).forEach( control => {
+        control.markAllAsTouched();
+      });
+    }
+
+  }
+
+
 
   createForm(){
     this.form = this.formBuilder.group({
@@ -95,10 +157,16 @@ export class PersonalDataFormComponent {
         domicilio: ['', [Validators.required]]
       }),
       fechaNacimiento: ['', [Validators.required]],
-      usuario: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)], [this.userUniqueValidation.userExits()]],
+      usuario: ['', {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)],
+        asyncValidators: [this.userUniqueValidation.userExits()],
+        updateOn: 'blur' // actualizamos el campo cuando lo deseleccionamos, para no estar consultando la api de usarios por cada letra que se escriba
+      }],
       // La contraseña debe tener al menos 8 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. Puede tener otros símbolos.
-      password: ['', [Validators.required, Validators.pattern('(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S*'), Validators.minLength(8)]]
+      password1: ['', [Validators.required, Validators.pattern('(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S*'), Validators.minLength(8)]],
+      password2: ['', [Validators.required]]
+    },{
+      validators: this.samePsswordValidation.samePasswords('password1', 'password2')
     })
   }
-
 }

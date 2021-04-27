@@ -19,7 +19,7 @@ export class UsersService {
 
   constructor( private http: HttpClient ) { }
 
-  checkIfUserExists(user: string): Observable<any>{
-    return this.http.get(`${ this.baseUrl }/usuarios?nombre=${ user }`);
+  checkIfUserExists(user: string): Observable<boolean>{
+    return this.http.get<boolean>(`${ this.baseUrl }/usuarios?nombre=${ user }`);
   }
 }
