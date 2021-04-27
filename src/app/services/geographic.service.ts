@@ -1,42 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-
 import { Observable } from "rxjs";
-import { map } from 'rxjs/operators';
 
-
-interface ProvinciasResponse {
-  cantidad: number,
-  inicio: number,
-  parametros: {},
-  provincias: Provincia[],
-  total: number
-}
-
-interface Provincia {
-  id: string,
-  nombre: string
-}
-
-interface MunicipiosResponse {
-  cantidad: number,
-  inicio: number,
-  parametros: {},
-  municipios: Municipio[],
-  total: number
-}
-
-interface Municipio {
-  id: string,
-  nombre: string
-}
-
-
+/** Interfaces **/
+import { MunicipiosResponse } from "../interfaces/municipiosResponse-interface";
+import { ProvinciasResponse } from "../interfaces/provinciasResponse-interface";
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class GeographicService {
 
   basUrlGeoRefAr: string = 'https://apis.datos.gob.ar/georef/api';
