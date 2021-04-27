@@ -10,11 +10,11 @@ import { Cobertura } from "../interfaces/cobertura-interface";
 })
 export class CoveragesService {
 
-  private baseUrl: string = `${ environment.baseUrl }/api_mock_frontend/v1`;
+  private Url: string = `${ environment.baseUrl }/api_mock_frontend/v1`;
 
   constructor( private http: HttpClient ) { }
 
   getCoberturas(): Observable<Cobertura[]>{
-    return this.http.get<Cobertura[]>(`${ this.baseUrl }/coberturas`);
+    return this.http.get<Cobertura[]>(`${ this.Url }/coberturas`);
   }
 }
