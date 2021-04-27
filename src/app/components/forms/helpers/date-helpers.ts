@@ -28,4 +28,19 @@ export class DateHelpers {
         return date;
     }
 
+    /**
+     * lastYears()
+     * Recibe un numero por parametro y retorna los ultimos X años equivalentes al parametro recibido
+     * @param yearsToSubstract 
+     * @returns 
+     */
+    lastYears(yearsToSubstract: number): number[] {
+        const currentYear = new Date().getFullYear();
+        let years: number[] = [];
+        for (let i = 0; i <= 20; i++) {
+            years.push(currentYear - i);
+        }
+        return years;
+    }
+
 }

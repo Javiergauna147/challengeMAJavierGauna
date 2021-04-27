@@ -36,6 +36,7 @@ export class PersonalDataFormComponent {
       this.createForm();
       this.cargarProvincias();
 
+      //Desactivamos todos los campos para ir los activando a medida que pedimos los datos
       this.form.controls.ubicacion.get('provincia').disable();
       this.form.controls.ubicacion.get('ciudad').disable();
       this.form.controls.ubicacion.get('domicilio').disable();
@@ -117,16 +118,13 @@ export class PersonalDataFormComponent {
     })
   }
   saveForm() {
-
     console.log(this.form.value);
-
     // Si algún campo quedó vacio, se marcan los errores antes de permitir enviar el formulario
     if ( this.form.invalid ){
       return Object.values(this.form.controls).forEach( control => {
         control.markAllAsTouched();
       });
     }
-
   }
 
 

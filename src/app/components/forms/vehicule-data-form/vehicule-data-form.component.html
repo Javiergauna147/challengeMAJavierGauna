@@ -1,1 +1,47 @@
-<p>vehicule-data-form works!</p>
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="saveForm()">
+    <!-- Campo Marca -->
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Marca</label>
+        <div class="col">
+            <select class="form-control" formControlName="marca" (change)="setMarca($event.target.value)">
+                <option value="" disabled selected hidden>Selecione una marca</option>
+                <option [value]="marca.desc" *ngFor="let marca of marcas">{{ marca.desc }}</option>
+            </select>
+        </div>
+    </div>
+    <!-- Campo anio -->
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Año</label>
+        <div class="col">
+            <select class="form-control" formControlName="anio" (change)="cargarModelos($event.target.value)">
+                <option value="" disabled selected hidden>Selecione un año</option>
+                <option [value]="anio" *ngFor="let anio of anios">{{ anio }}</option>
+            </select>
+        </div>
+    </div>
+    <!-- Campo modelo -->
+    <div class="form-group row">
+        <label class="col-2 col-form-label">modelo</label>
+        <div class="col">
+            <select class="form-control" formControlName="modelo" (change)="cargarVersiones($event.target.value)">
+                <option value="" disabled selected hidden>Selecione un modelo</option>
+                <option [value]="modelo" *ngFor="let modelo of modelos">{{ modelo }}</option>
+            </select>
+        </div>
+    </div>
+    <!-- Campo version -->
+    <div class="form-group row">
+        <label class="col-2 col-form-label">versión</label>
+        <div class="col">
+            <select class="form-control" formControlName="version">
+                <option value="" disabled selected hidden>Selecione una versión</option>
+                <option [value]="version.desc" *ngFor="let version of versiones">{{ version.desc }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Boton para guardar y seguir -->
+    <div class="input-group col">
+        <button type="submit" class="btn btn-outline-primary btn-block">Siguiente</button>
+    </div>
+</form>

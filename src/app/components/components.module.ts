@@ -18,7 +18,8 @@ import { VehiculeDataFormComponent } from './forms/vehicule-data-form/vehicule-d
   ],
   exports: [
     NavbarComponent,
-    PersonalDataFormComponent
+    PersonalDataFormComponent,
+    VehiculeDataFormComponent
   ]
 })
 export class ComponentsModule { }

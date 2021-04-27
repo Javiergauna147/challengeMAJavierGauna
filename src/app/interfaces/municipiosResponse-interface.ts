@@ -1,4 +1,4 @@
-import { Municipio } from "./municipi-interface";
+import { Municipio } from "./municipio-interface";
 
 export interface MunicipiosResponse {
     cantidad: number,
