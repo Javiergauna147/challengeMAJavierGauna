@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 /** Servicios **/
-import { CoveragesService } from '../../services/coverages.service';
+import { CoveragesService } from '../../../services/coverages.service';
 
 /** interfaces **/
-import { Cobertura } from '../../interfaces/cobertura-interface';
+import { Cobertura } from '../../../interfaces/cobertura-interface';
 
 @Component({
   selector: 'app-coverages',

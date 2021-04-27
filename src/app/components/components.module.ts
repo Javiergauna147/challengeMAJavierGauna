@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NavbarComponent } from './navbar/navbar.component';
 import { PersonalDataFormComponent } from './forms/personal-data-form/personal-data-form.component';
 import { VehiculeDataFormComponent } from './forms/vehicule-data-form/vehicule-data-form.component';
-import { CoveragesComponent } from './coverages/coverages.component';
+import { CoveragesComponent } from './forms/coverages-data-form/coverages.component';
 
 /** Pipes **/
 import { CleanTextPipe } from "../pipes/clean-text.pipe";

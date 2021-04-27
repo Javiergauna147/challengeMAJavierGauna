@@ -8,6 +8,7 @@ import { DateHelpers } from '../helpers/date-helpers';
 /** Validaciones de formulario**/
 import { UsernameUniqueValidation } from '../validations/username-unique';
 import { SamePasswordValidation } from '../validations/same-password';
+import { PersonalDataForm } from '../../../interfaces/personal-data-form-interface';
 
 
 @Component({
@@ -42,42 +43,39 @@ export class PersonalDataFormComponent {
       this.form.controls.ubicacion.get('domicilio').disable();
   }
 
+  /** Validacion para el campo dni, utilizada en el html **/
   get invalidDni(){
     return this.form.get('dni').invalid && this.form.get('dni').touched;
   }
-  
+  /** Validacion para el campo apellido, utilizada en el html **/
   get invalidApellido(){
     return this.form.get('apellido').invalid && this.form.get('apellido').touched;
   }
-
+  /** Validacion para el campo nombre, utilizada en el html **/
   get invalidNombre(){
     return this.form.get('nombre').invalid && this.form.get('nombre').touched;
   }
-
+  /** Validacion para el campo email, utilizada en el html **/
   get invalidEmail(){
     return this.form.get('email').invalid && this.form.get('email').touched;
   }
-
+  /** Validacion para el campo celular, utilizada en el html **/
   get invalidCelular(){
     return this.form.get('celular').invalid && this.form.get('celular').touched;
   }
-
+  /** Validacion para el campo telefono, utilizada en el html **/
   get invalidTelefono(){
     return this.form.get('telefono').invalid && this.form.get('telefono').touched;
   }
-
-  get invalidUbicacion(){
-    return false;
-  }
-
+  /** Validacion para el campo fechaNacimiento, utilizada en el html **/
   get invalidFechaNacimiento(){
     return this.form.get('fechaNacimiento').invalid && this.form.get('fechaNacimiento').touched;
   }
-
+  /** Validacion para el campo usuario, utilizada en el html **/
   get invalidUsuario(){
     return this.form.get('usuario').invalid && this.form.get('usuario').touched;
   }
-
+  /** Validacion para el campo password1, utilizada en el html **/
   get invalidPassword1(){
     return this.form.get('password1').invalid && this.form.get('password1').touched;
   }
@@ -90,7 +88,12 @@ export class PersonalDataFormComponent {
     return (pass1 === pass2) ? false : true;
   }
   
-  
+  /**
+   * cargarProvincias()
+   * método para cargar las provincias desde api
+   * Se ejecuta en el constructor para que mientras el usuario complete los primeros campos
+   * del formulario ya se tenga esta información lista
+   */
   cargarProvincias(){
     this.geoService.getProvincias().subscribe(data => {
       if(data.provincias.length > 0){
@@ -102,13 +105,16 @@ export class PersonalDataFormComponent {
       }
     })
   }
-
+  
+  /**
+   * cargarCiudades()
+   * método para cargar las ciudades desde la api
+   * @param provinciaNombre nombre de la provincia a la cual se le buscarán sus ciudades
+   */
   cargarCiudades(provinciaNombre){
 
     const provincia = this.provincias.find(provincia => provincia.nombre === provinciaNombre);
-
     this.ciudades = [];
-
     this.geoService.getMunicipios(provincia.id).subscribe(data => {
       if(data.municipios.length > 0){
         this.ciudades = data.municipios;
@@ -117,16 +123,28 @@ export class PersonalDataFormComponent {
       }
     })
   }
+
+  /**
+   * saveForm()
+   * método que se ejecuta al enviar el formulario
+   * @returns 
+   */
   saveForm() {
-    console.log(this.form.value);
     // Si algún campo quedó vacio, se marcan los errores antes de permitir enviar el formulario
     if ( this.form.invalid ){
       return Object.values(this.form.controls).forEach( control => {
         control.markAllAsTouched();
       });
     }
+    const formCompleted: PersonalDataForm = this.form.value;
+    
+    console.log(formCompleted);
   }
-
+  
+  /**
+   * createForm()
+   * método para crear el formulario, ejecutado en el constructor
+   */
   createForm(){
     this.form = this.formBuilder.group({
       dni: ['', [Validators.required, Validators.pattern('([0-9])*'),Validators.minLength(7), Validators.maxLength(8)]],
