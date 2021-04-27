@@ -1,0 +1,13 @@
+<div class="card mt-4" *ngFor="let coverage of coverages">
+    <h5 class="card-header">{{coverage.titulo}}</h5>
+    <div class="card-body">
+      <h5 class="card-title">Precio: {{coverage.costo | currency}}</h5>
+      <h5 class="card-title">Franquicia: {{coverage.franquicia | currency}}</h5>
+      <h5 class="card-title" *ngIf="coverage.granizo" >Tiene cobertura contra granizo</h5>
+      <hr>
+      <p class="card-text">{{coverage.descripcion | cleanText}}</p>
+      <p class="card-text fw-bolder">Producto: {{coverage.producto}}</p>
+      <p class="card-text fw-bolder">Puntaje: {{coverage.puntaje}}/5</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>

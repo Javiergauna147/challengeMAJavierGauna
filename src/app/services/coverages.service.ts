@@ -10,7 +10,7 @@ import { Cobertura } from "../interfaces/cobertura-interface";
 })
 export class CoveragesService {
 
-  private baseUrl: string = `${ environment.baseUrl }/api_mock_frontend/v1'`;
+  private baseUrl: string = `${ environment.baseUrl }/api_mock_frontend/v1`;
 
   constructor( private http: HttpClient ) { }
 
