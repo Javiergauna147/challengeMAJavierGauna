@@ -1,27 +1,23 @@
-# ChallengeMAJavierGauna
+# Mercantil Andina Challenge Javier Gauna
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.6.
+Este es un proyecto realizado en Angular 10, el cual valida un formulario por etapas
+y luego simula el envio del mismo a un api.
 
-## Development server
+Para desplegar el proyecto en modo de Desarrollo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Abrir una terminal en la ubicación del proyecto
+- Ejecutar `npm install` para instalar librerias
+- Ejecutar `npm start`
 
-## Code scaffolding
+## Descripción
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+El proyecto consiste en una componente Padre (`AltaAseguradoComponent`) que funciona como página y en su interior contiene tres componentes hijos
 
-## Build
+- `PersonalDataFormComponent` componente que contiene el formulario para la información del usuario
+- `VehiculeDataFormComponent` componente que contiene el formulario para la información del vehículo
+- `CoveragesComponent` componente que contiene la selección de cobertura
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Todos los componentes tienen sus respectivas validaciones de formulario y se comunican al componente padre mediante Outputs, para que este
+recopile los datos y luego simule enviarlos a la api. El componente puede ir ocultando y mostrando los distintos formularios cambiando el
+atributo css `display`, se utiliza eso y no un `*ngIf` ya que esto nos destruiría el componente y al querer regresar a un formulario completado,
+perderíamos los datos y tendríamos que reescribirlos al querer corregir un campo.
