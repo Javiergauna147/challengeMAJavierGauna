@@ -13,4 +13,8 @@ export class AltaAseguradoComponent {
     console.log('Hola desde el componente padre');
     console.log($event);
   }
+  receiveDataFromVehiculeData($event){
+    console.log('Hola desde el componente padre');
+    console.log($event);
+  }
 }

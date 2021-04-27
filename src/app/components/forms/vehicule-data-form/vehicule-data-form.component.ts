@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Marca } from 'src/app/interfaces/marca-interface';
 
@@ -8,7 +8,19 @@ import { Version } from '../../../interfaces/version-interface';
 
 /** Helpers **/
 import { DateHelpers } from '../helpers/date-helpers';
+import { VehiculeDataForm } from 'src/app/interfaces/vehicule-data-form-interface';
 
+
+/**
+ * interface MesajeToPaderComponent
+ * esta interface se utiliza para enviar un mensaje al componente padre
+ * atributo nextPage: el id del componente que se debe mostrar en el padre
+ * atributo dateForm: datos del formulario
+ */
+ interface MesaggeToPatherComponent {
+  nextForm:string,
+  dataForm: VehiculeDataForm
+}
 
 @Component({
   selector: 'app-vehicule-data-form',
@@ -27,6 +39,10 @@ export class VehiculeDataFormComponent {
    */
   marcaSelected: Marca; 
   anioSelected: number;
+  
+  form: FormGroup;
+
+  @Output() messageEvent = new EventEmitter<MesaggeToPatherComponent>()
 
   constructor( private formBuilder: FormBuilder,
                private vehiculesService: VehiculesService,
@@ -40,12 +56,29 @@ export class VehiculeDataFormComponent {
       this.form.get('version').disable();
 
       this.cargarMarcas()
-
   }
 
-  form: FormGroup;
+  /** Validacion para el campo marca, utilizada en el html **/
+  get invalidMarca(){
+    return this.form.get('marca').invalid && this.form.get('marca').touched;
+  }
+  /** Validacion para el campo marca, utilizada en el html **/
+  get invalidAnio(){
+    return this.form.get('anio').invalid && this.form.get('anio').touched;
+  }
+  /** Validacion para el modelo marca, utilizada en el html **/
+  get invalidModelo(){
+    return this.form.get('modelo').invalid && this.form.get('modelo').touched;
+  }
+  /** Validacion para el modelo marca, utilizada en el html **/
+  get invalidVersion(){
+    return this.form.get('version').invalid && this.form.get('version').touched;
+  }
 
-
+  /**
+   * cargarMarcas()
+   * método para cargar las marcas de vehiculos desde la api
+   */
   cargarMarcas() {
     this.vehiculesService.getMarcas().subscribe(data => {
       if( data.length > 0 ){
@@ -56,9 +89,13 @@ export class VehiculeDataFormComponent {
       }
     })
   }
-
+  /**
+   * setMarca()
+   * método para guardar dentro de una variable marcaSelected del componente el vehiculo que se este eligiendo
+   * la variable marcaSelected se utiliza para poder enviar la información de la marca en el método cargarModelos()
+   * @param marcaNombre nombre del a marca
+   */
   setMarca(marcaNombre: string) {
-
     this.form.get('modelo').disable();
     this.form.get('version').disable();
     this.modelos = [];
@@ -67,14 +104,16 @@ export class VehiculeDataFormComponent {
     this.marcaSelected = this.marcas.find(marca => marca.desc === marcaNombre);
     this.form.get('anio').enable();
   }
-
+  
+  /**
+   * cargarModelos()
+   * método para cargar las modelos desde la api
+   * @param anio año del vehiculo
+   */
   cargarModelos(anio: number) {
-    
     this.form.get('version').disable();
     this.versiones = [];
-
     this.anioSelected = anio;
-
     this.vehiculesService.getModelos(this.marcaSelected.codigo, this.anioSelected).subscribe(data => {
       if(data.length != 0){
         this.modelos = data;
@@ -84,9 +123,12 @@ export class VehiculeDataFormComponent {
       }
     })
   }
-
+  /**
+   * cargarVersiones()
+   * método para cargar las versiones desde la api
+   * @param modelo modelo del vehiculo
+   */
   cargarVersiones(modelo: string) {
-
     this.vehiculesService.getVersiones(this.marcaSelected.codigo, this.anioSelected, modelo).subscribe(data => {
       if(data.length > 0){
         this.versiones = data;
@@ -102,10 +144,26 @@ export class VehiculeDataFormComponent {
     alert('Lo sentimos, estamos teniendo inconvenientes por favor intentelo más tarde');
   }
 
+  /**
+   * saveForm()
+   * método que se ejecuta al enviar el formulario
+   */
   saveForm() {
-    console.log(this.form.value);
+    // Si algún campo quedó vacio, se marcan los errores antes de permitir enviar el formulario
+    if ( this.form.invalid ){
+      return Object.values(this.form.controls).forEach( control => {
+        control.markAllAsTouched();
+      });
+    }
+    const formCompleted: VehiculeDataForm = this.form.value;
+    const message: MesaggeToPatherComponent = {nextForm: 'coverages-data-form', dataForm: formCompleted};
+    // Enviamos los datos al componente padre
+    this.messageEvent.emit(message)
   }
-  
+  /**
+   * createForm()
+   * método para crear el formulario, ejecutado en el constructor
+   */
   createForm(){
     this.form = this.formBuilder.group({
       marca: ['', [Validators.required]],

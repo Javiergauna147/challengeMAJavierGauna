@@ -7,6 +7,9 @@
                 <option value="" disabled selected hidden>Selecione una marca</option>
                 <option [value]="marca.desc" *ngFor="let marca of marcas">{{ marca.desc }}</option>
             </select>
+            <small *ngIf="invalidMarca" class="text-danger">
+                El campo es requerido.
+            </small>
         </div>
     </div>
     <!-- Campo anio -->
@@ -17,6 +20,9 @@
                 <option value="" disabled selected hidden>Selecione un año</option>
                 <option [value]="anio" *ngFor="let anio of anios">{{ anio }}</option>
             </select>
+            <small *ngIf="invalidAnio" class="text-danger">
+                El campo es requerido.
+            </small>
         </div>
     </div>
     <!-- Campo modelo -->
@@ -27,6 +33,9 @@
                 <option value="" disabled selected hidden>Selecione un modelo</option>
                 <option [value]="modelo" *ngFor="let modelo of modelos">{{ modelo }}</option>
             </select>
+            <small *ngIf="invalidModelo" class="text-danger">
+                El campo es requerido.
+            </small>
         </div>
     </div>
     <!-- Campo version -->
@@ -37,6 +46,9 @@
                 <option value="" disabled selected hidden>Selecione una versión</option>
                 <option [value]="version.desc" *ngFor="let version of versiones">{{ version.desc }}</option>
             </select>
+            <small *ngIf="invalidVersion" class="text-danger">
+                El campo es requerido.
+            </small>
         </div>
     </div>
 

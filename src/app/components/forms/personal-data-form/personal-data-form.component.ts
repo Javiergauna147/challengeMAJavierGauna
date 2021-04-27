@@ -17,7 +17,7 @@ import { PersonalDataForm } from '../../../interfaces/personal-data-form-interfa
  * atributo nextPage: el id del componente que se debe mostrar en el padre
  * atributo dateForm: datos del formulario
  */
-interface MesajeToPatherComponent {
+interface MesaggeToPatherComponent {
   nextForm:string,
   dataForm: PersonalDataForm
 }
@@ -39,7 +39,7 @@ export class PersonalDataFormComponent {
   
   form: FormGroup;
 
-  @Output() messageEvent = new EventEmitter<MesajeToPatherComponent>()
+  @Output() messageEvent = new EventEmitter<MesaggeToPatherComponent>()
   
   constructor( private formBuilder: FormBuilder,
                private dateHelpers: DateHelpers,
@@ -149,8 +149,7 @@ export class PersonalDataFormComponent {
       });
     }
     const formCompleted: PersonalDataForm = this.form.value;
-    const message: MesajeToPatherComponent = {nextForm: 'vehicule-data-form', dataForm: formCompleted};
-
+    const message: MesaggeToPatherComponent = {nextForm: 'vehicule-data-form', dataForm: formCompleted};
     // Enviamos los datos al componente padre
     this.messageEvent.emit(message);
   }
