@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /** Servicios **/
@@ -10,6 +10,17 @@ import { UsernameUniqueValidation } from '../validations/username-unique';
 import { SamePasswordValidation } from '../validations/same-password';
 import { PersonalDataForm } from '../../../interfaces/personal-data-form-interface';
 
+
+/**
+ * interface MesajeToPaderComponent
+ * esta interface se utiliza para enviar un mensaje al componente padre
+ * atributo nextPage: el id del componente que se debe mostrar en el padre
+ * atributo dateForm: datos del formulario
+ */
+interface MesajeToPatherComponent {
+  nextForm:string,
+  dataForm: PersonalDataForm
+}
 
 @Component({
   selector: 'app-personal-data-form',
@@ -27,6 +38,8 @@ export class PersonalDataFormComponent {
   ciudades = [];
   
   form: FormGroup;
+
+  @Output() messageEvent = new EventEmitter<MesajeToPatherComponent>()
   
   constructor( private formBuilder: FormBuilder,
                private dateHelpers: DateHelpers,
@@ -127,7 +140,6 @@ export class PersonalDataFormComponent {
   /**
    * saveForm()
    * método que se ejecuta al enviar el formulario
-   * @returns 
    */
   saveForm() {
     // Si algún campo quedó vacio, se marcan los errores antes de permitir enviar el formulario
@@ -137,8 +149,10 @@ export class PersonalDataFormComponent {
       });
     }
     const formCompleted: PersonalDataForm = this.form.value;
-    
-    console.log(formCompleted);
+    const message: MesajeToPatherComponent = {nextForm: 'vehicule-data-form', dataForm: formCompleted};
+
+    // Enviamos los datos al componente padre
+    this.messageEvent.emit(message);
   }
   
   /**

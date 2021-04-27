@@ -21,7 +21,6 @@ export class UsernameUniqueValidation {
      */
     userExits(): AsyncValidatorFn {
         return( control: AbstractControl ): Observable<ValidationErrors> => {
-            console.log(control)
             return this.usersService.checkIfUserExists(control.value).pipe(map(res => {
                 return res ? { usernameExits: true } : null;
             }));
