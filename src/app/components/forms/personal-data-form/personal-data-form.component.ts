@@ -127,8 +127,6 @@ export class PersonalDataFormComponent {
     }
   }
 
-
-
   createForm(){
     this.form = this.formBuilder.group({
       dni: ['', [Validators.required, Validators.pattern('([0-9])*'),Validators.minLength(7), Validators.maxLength(8)]],
