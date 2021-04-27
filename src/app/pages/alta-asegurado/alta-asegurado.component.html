@@ -1,9 +1,6 @@
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title">Alta de asegurado</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+  <div class="modal-content mt-5">
+    <div class="modal-header bg-info">
+      <h3 class="modal-title text-white">Alta de asegurado</h3>
     </div>
     <div class="modal-body">
       <app-personal-data-form [ngStyle]="{'display':currentForm === 'personal-data-form' ? 'inline' : 'none' }" (nextEvent)="receiveDataFromPersonalData($event)"></app-personal-data-form>
@@ -12,6 +9,9 @@
     </div>
     <div class="modal-footer">
       <button type="button"  class="btn btn-outline-success mr-auto" [ngStyle]="{'display':currentForm === 'personal-data-form' ? 'none' : 'inline' }" (click)="backForm()">Volver</button>
+      <div class="spinner-border text-primary" role="status" *ngIf="loading">
+        <span class="visually-hidden"></span>
+      </div>
       <button type="button" class="btn btn-primary" *ngIf="readyToPost" (click)="postForm()">Registrar Asegurado</button>
     </div>
   </div>

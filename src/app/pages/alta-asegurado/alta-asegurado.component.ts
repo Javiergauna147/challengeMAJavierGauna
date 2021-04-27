@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-
+/** Servicios **/
+import { UsersService } from '../../services/users.service';
 /** Modelos **/
 import { FormToPost } from '../../models/formToPost.model';
 
@@ -17,7 +18,9 @@ export class AltaAseguradoComponent {
   /** Variable para controlar que el formulario este listo para enviarse al back **/
   readyToPost: boolean = false;
 
-  constructor() { }
+  loading: boolean = false;
+
+  constructor( private usersService: UsersService ) { }
 
   receiveDataFromPersonalData($event){
     this.currentForm = 'vehicule-data-form';
@@ -33,6 +36,7 @@ export class AltaAseguradoComponent {
   }
 
   /**
+   * backForm()
    * metodo para cambiar los componentes de formularios que se muestran
    */
   backForm(){
@@ -43,9 +47,18 @@ export class AltaAseguradoComponent {
     }
     this.readyToPost = false;
   }
-
+  /**
+   * postForm()
+   * metodo para simular el envio de información a la api
+   */
   postForm(){
-    console.log(this.formToPost);
-    alert(this.formToPost);
+    this.loading = true;
+    this.usersService.postUser(this.formToPost).then(data => {
+      if(data){
+        this.loading = false;
+        alert("Datos enviados: (También estan impresos en consola)\n" + JSON.stringify(this.formToPost))
+        console.log(this.formToPost);
+      };
+    })
   }
 }

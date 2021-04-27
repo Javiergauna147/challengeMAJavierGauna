@@ -1,9 +1,14 @@
 <form autocomplete="off" [formGroup]="form" (ngSubmit)="saveForm()">
     <div>
-
+        <div class="row">
+            <div class="col">
+                <h4>Datos personales</h4>
+                <hr>
+            </div>
+        </div>
         <!-- Campo Dni -->
         <div class="form-group row">
-            <label class="col-2 col-form-label">DNI</label>
+            <label class="col-2 col-form-label">DNI <sup>(*)</sup></label>
             <div class="col">
 
                 <input class="form-control" type="text" formControlName="dni" [class.is-invalid]="invalidDni">
@@ -15,7 +20,7 @@
 
         <!-- Campo Apellido -->
         <div class="form-group row">
-            <label class="col-2 col-form-label">Apellido</label>
+            <label class="col-2 col-form-label">Apellido <sup>(*)</sup></label>
             <div class="col">
 
                 <input class="form-control" type="text" formControlName="apellido" [class.is-invalid]="invalidApellido">
@@ -27,7 +32,7 @@
 
         <!-- Campo Nombre -->
         <div class="form-group row">
-            <label class="col-2 col-form-label">Nombre</label>
+            <label class="col-2 col-form-label">Nombre <sup>(*)</sup></label>
             <div class="col">
 
                 <input class="form-control" type="text" formControlName="nombre" [class.is-invalid]="invalidNombre">
@@ -36,7 +41,45 @@
                 </small>
             </div>
         </div>
+        <!-- Campo Ubicacion -->
+        <div class="form-group row" formGroupName="ubicacion">
+            <label class="col-2 col-form-label">ubicacion <sup>(*)</sup></label>
+            <div class="form-row col">
+                <div class="col">
+                    <select class="form-control" formControlName="provincia" (change)="cargarCiudades($event.target.value)">
+                        <option value="" disabled selected hidden>Selecione una provincia</option>
+                        <option [value]="provincia.nombre" *ngFor="let provincia of provincias">{{provincia.nombre}}</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control" formControlName="ciudad">
+                        <option value="" disabled selected hidden>Selecione una ciudad</option>
+                        <option [value]="ciudad.nombre" *ngFor="let ciudad of ciudades">{{ ciudad.nombre }}</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <input class="form-control" type="text" placeholder="domicilio" formControlName="domicilio">
+                </div>
+            </div>
+        </div>
 
+        <!-- Campo Fecha de nacimiento -->
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Fecha de nacimiento</label>
+            <div class="col">
+
+                <input class="form-control" type="date" [max]="maxDate" [min]="minDate" formControlName="fechaNacimiento" [class.is-invalid]="invalidFechaNacimiento">
+                <small>
+                    Solo se admiten fechas para mayores de 18 años
+                </small>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <h4>Contacto</h4>
+                <hr>
+            </div>
+        </div>
         <!-- Campo Email -->
         <div class="form-group row">
             <label class="col-2 col-form-label">Email</label>
@@ -71,44 +114,15 @@
                 </small>
             </div>
         </div>
-
-        <!-- Campo Ubicacion -->
-        <div class="form-group row" formGroupName="ubicacion">
-            <label class="col-2 col-form-label">ubicacion</label>
-            <div class="form-row col">
-                <div class="col">
-                    <select class="form-control" formControlName="provincia" (change)="cargarCiudades($event.target.value)">
-                        <option value="" disabled selected hidden>Selecione una provincia</option>
-                        <option [value]="provincia.nombre" *ngFor="let provincia of provincias">{{provincia.nombre}}</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <select class="form-control" formControlName="ciudad">
-                        <option value="" disabled selected hidden>Selecione una ciudad</option>
-                        <option [value]="ciudad.nombre" *ngFor="let ciudad of ciudades">{{ ciudad.nombre }}</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <input class="form-control" type="text" placeholder="domicilio" formControlName="domicilio">
-                </div>
-            </div>
-        </div>
-
-        <!-- Campo Fecha de nacimiento -->
-        <div class="form-group row">
-            <label class="col-2 col-form-label">Fecha de nacimiento</label>
+        <div class="row mt-4">
             <div class="col">
-
-                <input class="form-control" type="date" [max]="maxDate" [min]="minDate" formControlName="fechaNacimiento" [class.is-invalid]="invalidFechaNacimiento">
-                <small>
-                    Solo se admiten fechas para mayores de 18 años
-                </small>
+                <h4>Datos de usuario</h4>
+                <hr>
             </div>
         </div>
-
         <!-- Campo Usuario -->
         <div class="form-group row">
-            <label class="col-2 col-form-label">Usuario</label>
+            <label class="col-2 col-form-label">Usuario <sup>(*)</sup></label>
             <div class="col">
 
                 <input class="form-control" type="text" formControlName="usuario" [class.is-invalid]="invalidUsuario">
@@ -120,7 +134,7 @@
 
         <!-- Campo Contraseña -->
         <div class="form-group row">
-            <label class="col-2 col-form-label">Contraseña</label>
+            <label class="col-2 col-form-label">Contraseña <sup>(*)</sup></label>
             <div class="col">
 
                 <input class="form-control" type="password" formControlName="password1" [class.is-invalid]="invalidPassword1">
@@ -132,7 +146,7 @@
 
         <!-- Campo Repita Contraseña -->
         <div class="form-group row">
-            <label class="col-2 col-form-label">Repita la contraseña</label>
+            <label class="col-2 col-form-label">Repita la contraseña <sup>(*)</sup></label>
             <div class="col">
                 <input class="form-control" type="password" formControlName="password2" [class.is-invalid]="invalidPassword2">
                 <small *ngIf="invalidPassword2" class="text-danger">
