@@ -6,11 +6,12 @@ import { ReactiveFormsModule } from "@angular/forms";
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { PersonalDataFormComponent } from './forms/personal-data-form/personal-data-form.component';
+import { VehiculeDataFormComponent } from './forms/vehicule-data-form/vehicule-data-form.component';
 
 
 
 @NgModule({
-  declarations: [NavbarComponent, PersonalDataFormComponent],
+  declarations: [NavbarComponent, PersonalDataFormComponent, VehiculeDataFormComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule

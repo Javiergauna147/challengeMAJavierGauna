@@ -39,8 +39,7 @@ export class PersonalDataFormComponent {
       this.form.controls.ubicacion.get('provincia').disable();
       this.form.controls.ubicacion.get('ciudad').disable();
       this.form.controls.ubicacion.get('domicilio').disable();
-      
-    }
+  }
 
   get invalidDni(){
     return this.form.get('dni').invalid && this.form.get('dni').touched;
