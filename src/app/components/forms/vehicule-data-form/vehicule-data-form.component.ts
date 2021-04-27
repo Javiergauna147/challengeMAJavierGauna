@@ -10,18 +10,6 @@ import { Version } from '../../../interfaces/version-interface';
 import { DateHelpers } from '../helpers/date-helpers';
 import { VehiculeDataForm } from 'src/app/interfaces/vehicule-data-form-interface';
 
-
-/**
- * interface MesajeToPaderComponent
- * esta interface se utiliza para enviar un mensaje al componente padre
- * atributo nextPage: el id del componente que se debe mostrar en el padre
- * atributo dateForm: datos del formulario
- */
- interface MesaggeToPatherComponent {
-  nextForm:string,
-  dataForm: VehiculeDataForm
-}
-
 @Component({
   selector: 'app-vehicule-data-form',
   templateUrl: './vehicule-data-form.component.html',
@@ -42,7 +30,7 @@ export class VehiculeDataFormComponent {
   
   form: FormGroup;
 
-  @Output() messageEvent = new EventEmitter<MesaggeToPatherComponent>()
+  @Output() nextEvent = new EventEmitter<VehiculeDataForm>()
 
   constructor( private formBuilder: FormBuilder,
                private vehiculesService: VehiculesService,
@@ -156,9 +144,8 @@ export class VehiculeDataFormComponent {
       });
     }
     const formCompleted: VehiculeDataForm = this.form.value;
-    const message: MesaggeToPatherComponent = {nextForm: 'coverages-data-form', dataForm: formCompleted};
     // Enviamos los datos al componente padre
-    this.messageEvent.emit(message)
+    this.nextEvent.emit(formCompleted);
   }
   /**
    * createForm()
@@ -172,5 +159,4 @@ export class VehiculeDataFormComponent {
       version: ['', []]
     })
   }
-
 }

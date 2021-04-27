@@ -11,17 +11,6 @@ import { SamePasswordValidation } from '../validations/same-password';
 import { PersonalDataForm } from '../../../interfaces/personal-data-form-interface';
 
 
-/**
- * interface MesajeToPaderComponent
- * esta interface se utiliza para enviar un mensaje al componente padre
- * atributo nextPage: el id del componente que se debe mostrar en el padre
- * atributo dateForm: datos del formulario
- */
-interface MesaggeToPatherComponent {
-  nextForm:string,
-  dataForm: PersonalDataForm
-}
-
 @Component({
   selector: 'app-personal-data-form',
   templateUrl: './personal-data-form.component.html',
@@ -39,7 +28,7 @@ export class PersonalDataFormComponent {
   
   form: FormGroup;
 
-  @Output() messageEvent = new EventEmitter<MesaggeToPatherComponent>()
+  @Output() nextEvent = new EventEmitter<PersonalDataForm>()
   
   constructor( private formBuilder: FormBuilder,
                private dateHelpers: DateHelpers,
@@ -149,9 +138,8 @@ export class PersonalDataFormComponent {
       });
     }
     const formCompleted: PersonalDataForm = this.form.value;
-    const message: MesaggeToPatherComponent = {nextForm: 'vehicule-data-form', dataForm: formCompleted};
     // Enviamos los datos al componente padre
-    this.messageEvent.emit(message);
+    this.nextEvent.emit(formCompleted);
   }
   
   /**

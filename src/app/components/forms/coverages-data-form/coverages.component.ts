@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 /** Servicios **/
 import { CoveragesService } from '../../../services/coverages.service';
@@ -6,8 +6,9 @@ import { CoveragesService } from '../../../services/coverages.service';
 /** interfaces **/
 import { Cobertura } from '../../../interfaces/cobertura-interface';
 
+
 @Component({
-  selector: 'app-coverages',
+  selector: 'app-coverages-form',
   templateUrl: './coverages.component.html',
   styleUrls: ['./coverages.component.css']
 })
@@ -15,9 +16,11 @@ export class CoveragesComponent {
 
   coverages: Cobertura[] = [];
 
-  coverageSelected: Cobertura;
+  coverageSelected: Cobertura; // variable para mostrar la cobertura que se encuentra seleccionada en el html
 
   showSelectedCoverage: boolean = false; // variable a modo de bandera para espeficicar que ya hay una cobertura seleccionada
+  
+  @Output() nextEvent = new EventEmitter<Cobertura>()
 
   constructor( private coveragesService: CoveragesService ) {
     this.cargarCoberturas();
@@ -51,12 +54,13 @@ export class CoveragesComponent {
   
   /**
    * saveCoverage()
-   * metodo que envia los datos de la cobertura elegida al componte padre
+   * metodo que envia los datos de la cobertura elegida al componente padre
    * @param coverage 
    */
   saveCoverage(coverage: Cobertura) {
     this.coverageSelected = coverage;
     this.showSelectedCoverage = true;
-  }
 
+    this.nextEvent.emit(coverage);
+  }
 }

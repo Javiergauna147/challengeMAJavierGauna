@@ -6,11 +6,12 @@
       </button>
     </div>
     <div class="modal-body">
-      <!-- <app-personal-data-form (messageEvent)="receiveDataFromPersonalData($event)"></app-personal-data-form> -->
-      <app-vehicule-data-form (messageEvent)="receiveDataFromVehiculeData($event)"></app-vehicule-data-form>
+      <app-personal-data-form [ngStyle]="{'display':currentForm === 'personal-data-form' ? 'inline' : 'none' }" (nextEvent)="receiveDataFromPersonalData($event)"></app-personal-data-form>
+      <app-vehicule-data-form [ngStyle]="{'display':currentForm === 'vehicule-data-form' ? 'inline' : 'none' }" style="display: none;" (nextEvent)="receiveDataFromVehiculeData($event)"></app-vehicule-data-form>
+      <app-coverages-form [ngStyle]="{'display':currentForm === 'coverage-data-form' ? 'inline' : 'none' }" (nextEvent)="receiveDataFromCoverageData($event)"></app-coverages-form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary">Save changes</button>
+      <button type="button"  class="btn btn-outline-success mr-auto" [ngStyle]="{'display':currentForm === 'personal-data-form' ? 'none' : 'inline' }" (click)="backForm()">Volver</button>
+      <button type="button" class="btn btn-primary" *ngIf="readyToPost" (click)="postForm()">Registrar Asegurado</button>
     </div>
   </div>
