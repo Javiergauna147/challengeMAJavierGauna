@@ -15,6 +15,10 @@ export class CoveragesComponent {
 
   coverages: Cobertura[] = [];
 
+  coverageSelected: Cobertura;
+
+  showSelectedCoverage: boolean = false; // variable a modo de bandera para espeficicar que ya hay una cobertura seleccionada
+
   constructor( private coveragesService: CoveragesService ) {
     this.cargarCoberturas();
   }
@@ -44,4 +48,15 @@ export class CoveragesComponent {
     })
     return arrayOfCoverages;
   }
+  
+  /**
+   * saveCoverage()
+   * metodo que envia los datos de la cobertura elegida al componte padre
+   * @param coverage 
+   */
+  saveCoverage(coverage: Cobertura) {
+    this.coverageSelected = coverage;
+    this.showSelectedCoverage = true;
+  }
+
 }
